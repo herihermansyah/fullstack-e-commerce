@@ -83,7 +83,7 @@ AUTH_GOOGLE_SECRET=your_google_client_secret
 
 Clone the repository:
 
-git clone [https://github.com/herihermansyah/fullstack-e-commerce.git](https://github.com/herihermansyah/fullstack-e-commerce.git)
+git clone (https://github.com/herihermansyah/fullstack-e-commerce.git)
 cd fullstack-e-commerce
 
 pnpm install
