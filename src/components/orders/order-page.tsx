@@ -1,4 +1,4 @@
-import {getOrders} from "@/feature/orders/action/getOrder.action";
+import {getMyOrders} from "@/feature/orders/action/getOrder.action";
 import Image from "next/image";
 import React from "react";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
@@ -9,7 +9,7 @@ import {Button} from "../ui/button";
 import Link from "next/link";
 
 async function OrderPage() {
-  const result = await getOrders();
+  const result = await getMyOrders(); 
 
   if (!result || result.length === 0) {
     return (
