@@ -58,7 +58,7 @@ A high-performance, secure, and scalable e-commerce platform built with the late
 
 Create a `.env` file in the root directory and add the following variables:
 
-```env
+```
 # Database (Prisma)
 DATABASE_URL=your_postgresql_database_url
 
@@ -73,6 +73,8 @@ AUTH_SECRET=your_auth_secret_any_long_string
 AUTH_TRUST_HOST=true
 AUTH_GOOGLE_ID=your_google_client_id
 AUTH_GOOGLE_SECRET=your_google_client_secret
+
+```
 
 # App URL
 NEXTAUTH_URL=[https://fullstack-e-commerce-six.vercel.app](https://fullstack-e-commerce-six.vercel.app)
@@ -108,12 +110,10 @@ pnpm build
 🙌 Contributions
 Contributions are always welcome! Feel free to submit issues or pull requests to improve this boilerplate.
 
-👨‍💻 Author
-Heri Hermansyah
-
-🔗 LinkedIn
-
-🔗 GitHub
+## 👨‍💻 Author
+**Heri Hermansyah**
+* 🔗 [LinkedIn](https://www.linkedin.com/in/heri-hermansyah/)
+* 🔗 [GitHub](https://github.com/herihermansyah)
 
 📜 License
 This project is open-source under the MIT License.
