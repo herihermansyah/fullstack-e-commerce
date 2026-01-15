@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛍️ Modern Fullstack E-Commerce Enterprise
 
-## Getting Started
+A high-performance, secure, and scalable e-commerce platform built with the latest **Next.js 16**, **TypeScript**, and **Supabase**. This project features a robust admin dashboard, seamless checkout flow, and comprehensive user profile management.
 
-First, run the development server:
+🚀 **Live Demo:** [https://fullstack-e-commerce-six.vercel.app](https://fullstack-e-commerce-six.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+---
+
+## ✨ Features
+
+### 👤 User Side
+* **Shopping Experience**: Browse all products with a modern UI and view detailed product information.
+* **Cart Management**: Add products to cart, increment/decrement quantities, and real-time total calculation.
+* **Seamless Checkout**: Integrated order process including shipping address selection and payment method.
+* **Profile Management**: 
+    * Update personal information & change password.
+    * Manage multiple shipping addresses and payment methods.
+    * **Avatar Upload**: Change profile picture directly using Supabase Storage.
+
+### 🔐 Admin Dashboard
+* **Product & Category Management**: Full CRUD (Create, Read, Update, Delete) functionality for products and categories.
+* **User Management**: 
+    * View all registered users.
+    * Ability to block/deactivate user accounts.
+    * Manage user roles (e.g., switching between USER and ADMIN).
+* **Order Monitoring**: View detailed order history and transaction details.
+
+---
+
+## 🛠️ Tech Stack & Libraries
+
+### Core
+* **Next.js 16 (App Router)**: The foundation for Server Components, Actions, and optimized routing.
+* **React 19**: Utilizing the latest UI rendering features.
+* **TypeScript**: Ensures type safety and reduces runtime errors.
+* **Prisma ORM**: Type-safe database client to interact with PostgreSQL.
+
+### Authentication & Security
+* **Next-Auth (Auth.js v5)**: Secure authentication with Google Provider and Prisma Adapter.
+* **Bcryptjs**: For hashing and securing user passwords.
+* **Zod**: Schema validation for every input and API request.
+
+### UI/UX (Styling)
+* **Tailwind CSS 4.0**: Utility-first CSS for rapid and modern styling.
+* **Shadcn UI & Radix UI**: High-quality, accessible UI components (Dialog, Dropdown, Tabs, etc.).
+* **Lucide React**: Beautiful and consistent iconography.
+* **Sonner**: Sleek toast notifications for user feedback.
+
+### State Management & Utilities
+* **Zustand**: Lightweight and fast state management for the shopping cart.
+* **TanStack Table**: Advanced data tables for Admin lists.
+* **Use-Debounce**: Optimizing search and filter performance.
+* **Date-fns**: Handling and formatting complex dates.
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env` file in the root directory and add the following variables:
+
+```env
+# Database (Prisma)
+DATABASE_URL=your_postgresql_database_url
+
+# Supabase (Storage & API)
+SUPABASE_SECRETE_KEY=your_supabase_service_role_key
+SUPABSE_BASE_API_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_SECRET_KEY=your_supabase_anon_key
+NEXT_PUBLIC_SUPABASE_BASE_URL=your_supabase_project_url
+
+# Auth.js (Next-Auth)
+AUTH_SECRET=your_auth_secret_any_long_string
+AUTH_TRUST_HOST=true
+AUTH_GOOGLE_ID=your_google_client_id
+AUTH_GOOGLE_SECRET=your_google_client_secret
+
+# App URL
+NEXTAUTH_URL=[https://fullstack-e-commerce-six.vercel.app](https://fullstack-e-commerce-six.vercel.app)
+
+🚀 Getting Started
+
+Clone the repository:
+
+Bash
+
+git clone [https://github.com/herihermansyah/fullstack-e-commerce.git](https://github.com/herihermansyah/fullstack-e-commerce.git)
+cd fullstack-e-commerce
+
+Bash
+
+pnpm install
+Setup Database:
+
+Bash
+
+npx prisma generate
+npx prisma db push
+Run Development Server:
+
+Bash
+
 pnpm dev
-# or
-bun dev
-```
+Build for Production:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Bash
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+pnpm build
+🙌 Contributions
+Contributions are always welcome! Feel free to submit issues or pull requests to improve this boilerplate.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+👨‍💻 Author
+Heri Hermansyah
 
-## Learn More
+🔗 LinkedIn
 
-To learn more about Next.js, take a look at the following resources:
+🔗 GitHub
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📜 License
+This project is open-source under the MIT License.
