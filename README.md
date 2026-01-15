@@ -75,38 +75,30 @@ AUTH_GOOGLE_ID=your_google_client_id
 AUTH_GOOGLE_SECRET=your_google_client_secret
 
 ```
+---
 
-# App URL
-NEXTAUTH_URL=[https://fullstack-e-commerce-six.vercel.app](https://fullstack-e-commerce-six.vercel.app)
 
+```
 🚀 Getting Started
 
 Clone the repository:
 
-Bash
-
 git clone [https://github.com/herihermansyah/fullstack-e-commerce.git](https://github.com/herihermansyah/fullstack-e-commerce.git)
 cd fullstack-e-commerce
 
-Bash
-
 pnpm install
 Setup Database:
-
-Bash
 
 npx prisma generate
 npx prisma db push
 Run Development Server:
 
-Bash
-
 pnpm dev
 Build for Production:
 
-Bash
-
 pnpm build
+```
+---
 🙌 Contributions
 Contributions are always welcome! Feel free to submit issues or pull requests to improve this boilerplate.
 
