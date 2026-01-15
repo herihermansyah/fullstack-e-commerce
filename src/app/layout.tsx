@@ -25,7 +25,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  const initialCount = session ? await getTotalCartItem(session.user.id) : 0;
+  const initialCount = session ? await getTotalCartItem(session?.user?.id) : 0;
   return (
     <html lang="en">
       <body className={`${poppinsFonts.className} antialiased`}>
