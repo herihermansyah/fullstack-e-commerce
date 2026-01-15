@@ -1,0 +1,291 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+//  ===================================================
+//  Model User & Auth
+//  ===================================================
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model User {
+  id            String    @id @default(cuid())
+  firstName     String?   @map("first_name")
+  lastName      String?   @map("last_name")
+  maidenName    String?   @map("maiden_name")
+  birthDate     DateTime? @map("birth_date")
+  gender        Gender?   @default(OTHER)
+  phone         String?   @unique
+  name          String?
+  username      String?   @unique
+  email         String?   @unique
+  password      String?
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  role          Role?     @default(USER)
+
+  isActive      Boolean   @default(true) @map("is_active")
+
+  orders    Order[]
+  cart            Cart?
+
+  accounts         Account[]
+  sessions         Session[]
+  addresses        Address[]
+  payment_methods  PaymentMethod[]
+
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+ 
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@map("sessions")
+}
+ 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+
+//  ===================================================
+//  Model Address
+//  ===================================================
+
+
+model Address {
+  id           String    @id @default(cuid())
+  userId       String    @map("user_id")
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label        String?
+  fullAddress  String?   @db.Text
+  city         String?
+  postalCode   String?
+  province     String?
+  country      String?   @default("INDONESIA")
+  isPrimary    Boolean   @default(false) @map("is_primary")
+
+  orders    Order[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("addresses")
+}
+
+
+//  ===================================================
+//  Model Payment Method
+//  ===================================================
+
+
+model PaymentMethod {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  bankName     String?  @map("bank_name") 
+  cardType     String?  @map("card_type") 
+  
+  cardNumber   String?  @map("card_number")
+  cardHolder   String?  @map("card_holder") 
+  cardExpire   String?  @map("card_expire") 
+  
+  currency     String?  @default("USD")
+
+  isDefault    Boolean  @default(false) @map("is_default") 
+  isActive     Boolean  @default(true) @map("is_active")  
+
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("payment_methods")
+}
+
+
+//  ===================================================
+//  Model Product
+//  ===================================================
+
+
+model Product {
+  id                   String   @id @default(cuid())
+  title                String   @db.Text
+  description          String   @db.Text
+  
+  price                Float
+  stock                Int      @default(0)
+  minimumOrderQuantity Int      @default(1)
+  
+  rating               Float    @default(0)
+  
+  images               String[]
+  thumbnail            String
+  
+  returnPolicy         String   @default("No return policy")
+
+  orderItems           OrderItem[]
+  cartItems            CartItem[]
+  
+  categoryId           String
+  category             Category @relation(fields: [categoryId], references: [id])
+
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  @@map("products")
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  slug     String    @unique
+  products Product[]
+
+  @@map("categories")
+}
+
+
+//  ===================================================
+//  Model Order (Transaction System)
+//  ===================================================
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String      @map("user_id")
+  user            User        @relation(fields: [userId], references: [id])
+  
+  addressId       String      @map("address_id")
+  address         Address     @relation(fields: [addressId], references: [id], onDelete: Restrict) 
+
+  // Perbaikan: Snapshot Alamat (Opsional tapi disarankan)
+  // shippingAddress String?   @db.Text 
+
+  // Perbaikan: Detail Biaya
+  subtotal        Float       @default(0)
+  shippingCost    Float       @default(0) @map("shipping_cost")
+  totalAmount     Float       @map("total_amount")
+  
+  status          OrderStatus @default(PENDING)
+
+  // Perbaikan: Untuk Integrasi Payment Gateway (Midtrans/Stripe)
+  paymentMethod   String?     @map("payment_method")
+  paymentStatus   String?     @map("payment_status")
+  
+  items           OrderItem[]
+  
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String  @map("order_id")
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade) 
+  
+  productId String  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict) 
+
+  productName  String @map("product_name")
+  productImage String @map("product_image")
+  
+  quantity  Int
+  price     Float
+
+  @@map("order_items")
+}
+
+
+// ===================================================
+// Model Cart (Shopping Cart System)
+// ===================================================
+
+model Cart {
+  id        String     @id @default(cuid())
+  
+  userId    String     @unique @map("user_id")
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  items     CartItem[]
+
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  
+  cartId    String   @map("cart_id")
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  
+  productId String   @map("product_id")
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  quantity  Int      @default(1)
+  
+  priceAtAdd Float?   @map("price_at_add")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([cartId, productId])
+  @@map("cart_items")
+}
