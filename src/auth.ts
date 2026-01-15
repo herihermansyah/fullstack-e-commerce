@@ -48,17 +48,4 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
   session: {
     strategy: "jwt",
   },
-  // callbacks: {
-  //   async signIn({user}) {
-  //     const dbUser = await prisma.user.findUnique({
-  //       where: {email: user.email as string},
-  //       select: {isActive: true},
-  //     });
-
-  //     if (dbUser && dbUser.isActive === false) {
-  //       throw new Error("USER_BANNED");
-  //     }
-  //     return true;
-  //   },
-  // },
 });
