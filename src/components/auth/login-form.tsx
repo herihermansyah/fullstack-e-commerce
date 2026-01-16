@@ -69,6 +69,10 @@ export function LoginForm({className, ...props}: React.ComponentProps<"div">) {
           {error}
         </div>
       )}
+       <div className="text-center font-bold">
+        <p>admin@admin.com</p>
+        <p>Admin1234</p>
+      </div>
       <Card>
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
