@@ -87,16 +87,17 @@ git clone (https://github.com/herihermansyah/fullstack-e-commerce.git)
 cd fullstack-e-commerce
 
 pnpm install
+
 Setup Database:
+pnpm prisma generate
+pnpm prisma db push
 
-npx prisma generate
-npx prisma db push
 Run Development Server:
-
 pnpm dev
-Build for Production:
 
+Build for Production:
 pnpm build
+
 ```
 ---
 🙌 Contributions
